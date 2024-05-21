@@ -25,4 +25,16 @@ class GildedRoseTest {
         assertEquals(-1, item.sellIn);
         assertEquals(8, item.quality);
     }
+
+    @Test
+    void testNormalItem_qualityNeverLessThanZero() {
+        Item item = new Item("+5 Dexterity Vest", 10, 20);
+        GildedRose gildedRose = new GildedRose(new Item[] {item});
+
+        for (int dayIndex = 21; dayIndex > -1; dayIndex--) {
+            gildedRose.updateQuality();
+        }
+        assertEquals(-12, item.sellIn);
+        assertEquals(0, item.quality);
+    }
 }
