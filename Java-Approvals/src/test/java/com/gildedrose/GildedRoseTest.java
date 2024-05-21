@@ -36,6 +36,15 @@ class GildedRoseTest {
         assertEquals(0, item.quality);
     }
 
+    @Test
+    void testAgedBrie_qualityIncreasesEachDay() {
+        Item item = new Item("Aged Brie", 10, 20);
+        gildedRose = new GildedRose(new Item[]{item});
+        gildedRose.updateQuality();
+        assertEquals(9, item.sellIn);
+        assertEquals(21, item.quality);
+    }
+
     private void updateQualityForMultipleDays(int days) {
         for (int dayIndex = days; dayIndex > -1; dayIndex--) {
             gildedRose.updateQuality();
