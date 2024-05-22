@@ -80,6 +80,15 @@ class GildedRoseTest {
         assertEquals(80, item.quality);
     }
 
+    @Test
+    void testBackstagePass_qualityIncreasesEachDay() {
+        Item item = getBackstagePassItem();
+        gildedRose = new GildedRose(new Item[]{item});
+        gildedRose.updateQuality();
+        assertEquals(19, item.sellIn);
+        assertEquals(21, item.quality);
+    }
+
     private void updateQualityForMultipleDays(int days) {
         for (int dayIndex = days; dayIndex > -1; dayIndex--) {
             gildedRose.updateQuality();
@@ -96,6 +105,9 @@ class GildedRoseTest {
 
     private static Item getSulfurasItem() {
         return new Item("Sulfuras, Hand of Ragnaros", 10, 80);
+    }
+    private static Item getBackstagePassItem() {
+        return new Item("Backstage passes to a TAFKAL80ETC concert", 20, 20);
     }
 
 }
