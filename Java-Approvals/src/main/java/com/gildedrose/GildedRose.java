@@ -1,21 +1,34 @@
 package com.gildedrose;
 
+import java.util.EnumMap;
+import java.util.Map;
+
+import static com.gildedrose.ItemType.*;
+
 class GildedRose {
     Item[] items;
 
+    private final Map<ItemType, QualityUpdateStrategy> itemTypeUpdateStrategyMap = new EnumMap<>(ItemType.class);
+
     public GildedRose(Item[] items) {
         this.items = items;
+        itemTypeUpdateStrategyMap.put(AGED_BRIE, this::updateQualityForAgedBrie);
+        itemTypeUpdateStrategyMap.put(SULFURAS, sulfuras -> {
+        });
+        itemTypeUpdateStrategyMap.put(BACKSTAGE_PASS, this::updateQualityForBackstagePass);
+        itemTypeUpdateStrategyMap.put(DEFAULT, this::updateQualityForNormalItem);
     }
 
     public void updateQuality() {
         for (Item item : items) {
             if (isAgedBrie(item)) {
-                updateQualityForAgedBrie(item);
+                itemTypeUpdateStrategyMap.get(AGED_BRIE).update(item);
             } else if (isSulfuras(item)) {
+                itemTypeUpdateStrategyMap.get(SULFURAS).update(item);
             } else if (isBackstagePass(item)) {
-                updateQualityForBackstagePass(item);
+                itemTypeUpdateStrategyMap.get(BACKSTAGE_PASS).update(item);
             } else {
-                updateQualityForNormalItem(item);
+                itemTypeUpdateStrategyMap.get(DEFAULT).update(item);
             }
         }
     }
