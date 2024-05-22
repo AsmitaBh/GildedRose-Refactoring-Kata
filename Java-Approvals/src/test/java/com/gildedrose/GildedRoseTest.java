@@ -98,6 +98,15 @@ class GildedRoseTest {
         assertEquals(32, item.quality);
     }
 
+    @Test
+    void testBackstagePass_whenSellInIsFiveOrLess_qualityIncreasesByThreeEachDay() {
+        Item item = getBackstagePassItem();
+        gildedRose = new GildedRose(new Item[]{item});
+        updateQualityForMultipleDays(15);
+        assertEquals(4, item.sellIn);
+        assertEquals(43, item.quality);
+    }
+
     private void updateQualityForMultipleDays(int days) {
         for (int dayIndex = days; dayIndex > -1; dayIndex--) {
             gildedRose.updateQuality();
