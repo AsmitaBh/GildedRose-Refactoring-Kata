@@ -32,7 +32,7 @@ class GildedRose {
             }
 
             if (!isSulfuras(item)) {
-                item.sellIn = item.sellIn - 1;
+                decrementSellInByOne(item);
             }
 
             if (hasSellByDatePassed(item)) {
@@ -51,6 +51,10 @@ class GildedRose {
                 }
             }
         }
+    }
+
+    private static void decrementSellInByOne(Item item) {
+        item.sellIn = item.sellIn - 1;
     }
 
     private static boolean hasSellByDatePassed(Item item) {
