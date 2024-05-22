@@ -12,7 +12,7 @@ class GildedRose {
             if (isAgedBrie(item)) {
                 updateQualityForAgedBrie(item);
             } else {
-                if (!isAgedBrie(item) && !isBackstagePass(item)) {
+                if (!isBackstagePass(item)) {
                     if (isQualityAboveMinLimit(item) && !isSulfuras(item)) {
                         decrementQualityByOne(item);
                     }
@@ -37,18 +37,12 @@ class GildedRose {
                 }
 
                 if (hasSellByDatePassed(item)) {
-                    if (!isAgedBrie(item)) {
-                        if (!isBackstagePass(item)) {
-                            if (isQualityAboveMinLimit(item) && !isSulfuras(item)) {
-                                decrementQualityByOne(item);
-                            }
-                        } else {
-                            dropQualityToZero(item);
+                    if (!isBackstagePass(item)) {
+                        if (isQualityAboveMinLimit(item) && !isSulfuras(item)) {
+                            decrementQualityByOne(item);
                         }
                     } else {
-                        if (isQualityUnderMaxLimit(item)) {
-                            incrementQualityByOne(item);
-                        }
+                        dropQualityToZero(item);
                     }
                 }
             }
