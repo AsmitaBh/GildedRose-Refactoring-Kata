@@ -71,11 +71,21 @@ class GildedRoseTest {
         assertEquals(80, item.quality);
     }
 
+    @Test
+    void testSulfuras_whenSellByDatePassed_qualityOrSellInNeverDecreases() {
+        Item item = getSulfurasItem();
+        gildedRose = new GildedRose(new Item[]{item});
+        updateQualityForMultipleDays(item.sellIn);
+        assertEquals(10, item.sellIn);
+        assertEquals(80, item.quality);
+    }
+
     private void updateQualityForMultipleDays(int days) {
         for (int dayIndex = days; dayIndex > -1; dayIndex--) {
             gildedRose.updateQuality();
         }
     }
+
     private static Item getNormalItem() {
         return new Item("+5 Dexterity Vest", 10, 20);
     }
