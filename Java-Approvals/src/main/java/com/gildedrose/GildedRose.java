@@ -12,22 +12,20 @@ class GildedRose {
             if (!item.name.equals("Aged Brie")
                 && !item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
                 if (item.quality > 0 && !item.name.equals("Sulfuras, Hand of Ragnaros")) {
-                        item.quality = item.quality - 1;
+                    decrementQualityByOne(item);
 
                 }
             } else {
                 if (isQualityUnderMaxLimit(item)) {
-                    item.quality = item.quality + 1;
+                    incrementQualityByOne(item);
 
                     if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
                         if (item.sellIn < 11 && isQualityUnderMaxLimit(item)) {
-                                item.quality = item.quality + 1;
-
+                            incrementQualityByOne(item);
                         }
 
                         if (item.sellIn < 6 && isQualityUnderMaxLimit(item)) {
-                                item.quality = item.quality + 1;
-
+                            incrementQualityByOne(item);
                         }
                     }
                 }
@@ -41,22 +39,29 @@ class GildedRose {
                 if (!item.name.equals("Aged Brie")) {
                     if (!item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
                         if (item.quality > 0 && !item.name.equals("Sulfuras, Hand of Ragnaros")) {
-                                item.quality = item.quality - 1;
-
+                            decrementQualityByOne(item);
                         }
                     } else {
                         item.quality = 0;
                     }
                 } else {
                     if (isQualityUnderMaxLimit(item)) {
-                        item.quality = item.quality + 1;
+                        incrementQualityByOne(item);
                     }
                 }
             }
         }
     }
 
-    private boolean isQualityUnderMaxLimit(Item item) {
+    private static void incrementQualityByOne(Item item) {
+        item.quality = item.quality + 1;
+    }
+
+    private static void decrementQualityByOne(Item item) {
+        item.quality = item.quality - 1;
+    }
+
+    private static boolean isQualityUnderMaxLimit(Item item) {
         return item.quality < 50;
     }
 }
