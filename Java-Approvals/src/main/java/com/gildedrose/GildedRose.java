@@ -42,7 +42,7 @@ class GildedRose {
                             decrementQualityByOne(item);
                         }
                     } else {
-                        item.quality = 0;
+                        dropQualityToZero(item);
                     }
                 } else {
                     if (isQualityUnderMaxLimit(item)) {
@@ -51,6 +51,10 @@ class GildedRose {
                 }
             }
         }
+    }
+
+    private static void dropQualityToZero(Item item) {
+        item.quality = 0;
     }
 
     private static void decrementSellInByOne(Item item) {
