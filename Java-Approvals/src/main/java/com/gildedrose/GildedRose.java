@@ -38,19 +38,14 @@ class GildedRose {
     }
 
     private void updateQualityForBackstagePass(Item item) {
-        if (isQualityUnderMaxLimit(item)) {
-            incrementQualityByOne(item);
-
-            if (isSellInTenDaysOrLess(item) && isQualityUnderMaxLimit(item)) {
-                incrementQualityByOne(item);
-            }
-
-            if (isSellInFiveDaysOrLess(item) && isQualityUnderMaxLimit(item)) {
-                incrementQualityByOne(item);
-            }
+        if (isSellInFiveDaysOrLess(item)) {
+            incrementQualityByGivenValWithMaxLimit(item, 3);
+        } else if (isSellInTenDaysOrLess(item)) {
+            incrementQualityByGivenValWithMaxLimit(item, 2);
+        } else {
+            incrementQualityByOneWithMaxLimit(item);
         }
         decrementSellInByOne(item);
-
         if (hasSellByDatePassed(item)) {
             dropQualityToZero(item);
         }
