@@ -31,6 +31,9 @@ class GildedRose {
     private void updateQualityForConjured(Item item) {
         decrementQualityByGivenValWithMinLimit(item, 2);
         decrementSellInByOne(item);
+        if (hasSellByDatePassed(item)){
+            decrementQualityByGivenValWithMinLimit(item, 2);
+        }
     }
 
     private void updateQualityForNormalItem(Item item) {

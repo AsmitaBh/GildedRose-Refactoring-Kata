@@ -134,6 +134,26 @@ class GildedRoseTest {
         assertEquals(48, item.quality);
     }
 
+    @Test
+    void testConjured_whenSellByDatePassed_qualityDecreasesTwiceAsFastEachDay() {
+        Item item = getConjuredItem();
+        gildedRose = new GildedRose(new Item[]{item});
+        updateQualityForMultipleDays(item.sellIn);
+        assertEquals(-1, item.sellIn);
+        assertEquals(6, item.quality);
+        gildedRose.updateQuality();
+        assertEquals(-2, item.sellIn);
+        assertEquals(2, item.quality);
+    }
+    @Test
+    void testConjured_qualityNeverLessThanZero() {
+        Item item = getConjuredItem();
+        gildedRose = new GildedRose(new Item[]{item});
+        updateQualityForMultipleDays(22);
+        assertEquals(-3, item.sellIn);
+        assertEquals(0, item.quality);
+    }
+
     private Item getConjuredItem() {
         return new Item("Conjured Mana Cake", 20, 50);
     }
