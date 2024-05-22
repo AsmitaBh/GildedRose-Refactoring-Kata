@@ -15,15 +15,18 @@ class GildedRose {
             } else if (isBackstagePass(item)) {
                 updateQualityForBackstagePass(item);
             } else {
-                if (isQualityAboveMinLimit(item)) {
-                    decrementQualityByOne(item);
-                }
-                decrementSellInByOne(item);
-                if (hasSellByDatePassed(item) && isQualityAboveMinLimit(item)) {
-                        decrementQualityByOne(item);
-
-                }
+                updateQualityForNormalItem(item);
             }
+        }
+    }
+
+    private void updateQualityForNormalItem(Item item) {
+        if (isQualityAboveMinLimit(item)) {
+            decrementQualityByOne(item);
+        }
+        decrementSellInByOne(item);
+        if (hasSellByDatePassed(item) && isQualityAboveMinLimit(item)) {
+            decrementQualityByOne(item);
         }
     }
 
