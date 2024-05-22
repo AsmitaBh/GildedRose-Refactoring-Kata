@@ -62,6 +62,15 @@ class GildedRoseTest {
         assertEquals(50, item.quality);
     }
 
+    @Test
+    void testSulfuras_qualityOrSellInNeverDecreasesEachDay() {
+        Item item = getSulfurasItem();
+        gildedRose = new GildedRose(new Item[]{item});
+        gildedRose.updateQuality();
+        assertEquals(10, item.sellIn);
+        assertEquals(80, item.quality);
+    }
+
     private void updateQualityForMultipleDays(int days) {
         for (int dayIndex = days; dayIndex > -1; dayIndex--) {
             gildedRose.updateQuality();
@@ -74,4 +83,9 @@ class GildedRoseTest {
     private static Item getAgedBrieItem() {
         return new Item("Aged Brie", 10, 20);
     }
+
+    private static Item getSulfurasItem() {
+        return new Item("Sulfuras, Hand of Ragnaros", 10, 80);
+    }
+
 }
