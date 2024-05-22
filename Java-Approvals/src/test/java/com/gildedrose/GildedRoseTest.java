@@ -107,6 +107,24 @@ class GildedRoseTest {
         assertEquals(43, item.quality);
     }
 
+    @Test
+    void testBackstagePass_qualityNeverMoreThanFifty() {
+        Item item = getBackstagePassItem();
+        gildedRose = new GildedRose(new Item[]{item});
+        updateQualityForMultipleDays(18);
+        assertEquals(1, item.sellIn);
+        assertEquals(50, item.quality);
+    }
+
+    @Test
+    void testBackstagePass_whenSellByDatePassed_qualityDropsToZero() {
+        Item item = getBackstagePassItem();
+        gildedRose = new GildedRose(new Item[]{item});
+        updateQualityForMultipleDays(20);
+        assertEquals(-1, item.sellIn);
+        assertEquals(0, item.quality);
+    }
+
     private void updateQualityForMultipleDays(int days) {
         for (int dayIndex = days; dayIndex > -1; dayIndex--) {
             gildedRose.updateQuality();
