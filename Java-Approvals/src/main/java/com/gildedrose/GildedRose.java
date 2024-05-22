@@ -15,35 +15,13 @@ class GildedRose {
             } else if (isBackstagePass(item)) {
                 updateQualityForBackstagePass(item);
             } else {
-                if (!isBackstagePass(item)) {
+                if (isQualityAboveMinLimit(item)) {
+                    decrementQualityByOne(item);
+                }
+                decrementSellInByOne(item);
+                if (hasSellByDatePassed(item)) {
                     if (isQualityAboveMinLimit(item)) {
                         decrementQualityByOne(item);
-                    }
-                } else {
-                    if (isQualityUnderMaxLimit(item)) {
-                        incrementQualityByOne(item);
-
-                        if (isBackstagePass(item)) {
-                            if (isSellInTenDaysOrLess(item) && isQualityUnderMaxLimit(item)) {
-                                incrementQualityByOne(item);
-                            }
-
-                            if (isSellInFiveDaysOrLess(item) && isQualityUnderMaxLimit(item)) {
-                                incrementQualityByOne(item);
-                            }
-                        }
-                    }
-                }
-
-                decrementSellInByOne(item);
-
-                if (hasSellByDatePassed(item)) {
-                    if (!isBackstagePass(item)) {
-                        if (isQualityAboveMinLimit(item)) {
-                            decrementQualityByOne(item);
-                        }
-                    } else {
-                        dropQualityToZero(item);
                     }
                 }
             }
