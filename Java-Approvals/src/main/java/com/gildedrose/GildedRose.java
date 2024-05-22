@@ -21,15 +21,8 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
-            if (isAgedBrie(item)) {
-                itemTypeUpdateStrategyMap.get(AGED_BRIE).update(item);
-            } else if (isSulfuras(item)) {
-                itemTypeUpdateStrategyMap.get(SULFURAS).update(item);
-            } else if (isBackstagePass(item)) {
-                itemTypeUpdateStrategyMap.get(BACKSTAGE_PASS).update(item);
-            } else {
-                itemTypeUpdateStrategyMap.get(DEFAULT).update(item);
-            }
+            ItemType itemType = ItemType.getByItemName(item.name);
+            itemTypeUpdateStrategyMap.get(itemType).update(item);
         }
     }
 
