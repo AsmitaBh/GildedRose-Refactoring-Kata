@@ -9,46 +9,59 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
-            if (!isAgedBrie(item)
-                && !isBackstagePass(item)) {
-                if (isQualityAboveMinLimit(item) && !isSulfuras(item)) {
-                    decrementQualityByOne(item);
-                }
+            if (isAgedBrie(item)) {
+                updateQualityForAgedBrie(item);
             } else {
-                if (isQualityUnderMaxLimit(item)) {
-                    incrementQualityByOne(item);
-
-                    if (isBackstagePass(item)) {
-                        if (isSellInTenDaysOrLess(item) && isQualityUnderMaxLimit(item)) {
-                            incrementQualityByOne(item);
-                        }
-
-                        if (isSellInFiveDaysOrLess(item) && isQualityUnderMaxLimit(item)) {
-                            incrementQualityByOne(item);
-                        }
-                    }
-                }
-            }
-
-            if (!isSulfuras(item)) {
-                decrementSellInByOne(item);
-            }
-
-            if (hasSellByDatePassed(item)) {
-                if (!isAgedBrie(item)) {
-                    if (!isBackstagePass(item)) {
-                        if (isQualityAboveMinLimit(item) && !isSulfuras(item)) {
-                            decrementQualityByOne(item);
-                        }
-                    } else {
-                        dropQualityToZero(item);
+                if (!isAgedBrie(item) && !isBackstagePass(item)) {
+                    if (isQualityAboveMinLimit(item) && !isSulfuras(item)) {
+                        decrementQualityByOne(item);
                     }
                 } else {
                     if (isQualityUnderMaxLimit(item)) {
                         incrementQualityByOne(item);
+
+                        if (isBackstagePass(item)) {
+                            if (isSellInTenDaysOrLess(item) && isQualityUnderMaxLimit(item)) {
+                                incrementQualityByOne(item);
+                            }
+
+                            if (isSellInFiveDaysOrLess(item) && isQualityUnderMaxLimit(item)) {
+                                incrementQualityByOne(item);
+                            }
+                        }
+                    }
+                }
+
+                if (!isSulfuras(item)) {
+                    decrementSellInByOne(item);
+                }
+
+                if (hasSellByDatePassed(item)) {
+                    if (!isAgedBrie(item)) {
+                        if (!isBackstagePass(item)) {
+                            if (isQualityAboveMinLimit(item) && !isSulfuras(item)) {
+                                decrementQualityByOne(item);
+                            }
+                        } else {
+                            dropQualityToZero(item);
+                        }
+                    } else {
+                        if (isQualityUnderMaxLimit(item)) {
+                            incrementQualityByOne(item);
+                        }
                     }
                 }
             }
+        }
+    }
+
+    private void updateQualityForAgedBrie(Item item) {
+        if (isQualityUnderMaxLimit(item)) {
+            incrementQualityByOne(item);
+        }
+        decrementSellInByOne(item);
+        if (hasSellByDatePassed(item) && isQualityUnderMaxLimit(item)) {
+            incrementQualityByOne(item);
         }
     }
 
