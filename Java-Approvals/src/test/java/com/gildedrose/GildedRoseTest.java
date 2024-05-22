@@ -125,6 +125,19 @@ class GildedRoseTest {
         assertEquals(0, item.quality);
     }
 
+    @Test
+    void testConjured_qualityDecreasesByTwoEachDay() {
+        Item item = getConjuredItem();
+        gildedRose = new GildedRose(new Item[]{item});
+        gildedRose.updateQuality();
+        assertEquals(19, item.sellIn);
+        assertEquals(48, item.quality);
+    }
+
+    private Item getConjuredItem() {
+        return new Item("Conjured Mana Cake", 20, 50);
+    }
+
     private void updateQualityForMultipleDays(int days) {
         for (int dayIndex = days; dayIndex > -1; dayIndex--) {
             gildedRose.updateQuality();

@@ -17,6 +17,7 @@ class GildedRose {
         itemTypeUpdateStrategyMap.put(SULFURAS, sulfuras -> {
         });
         itemTypeUpdateStrategyMap.put(BACKSTAGE_PASS, this::updateQualityForBackstagePass);
+        itemTypeUpdateStrategyMap.put(CONJURED, this::updateQualityForConjured);
         itemTypeUpdateStrategyMap.put(DEFAULT, this::updateQualityForNormalItem);
     }
 
@@ -25,6 +26,11 @@ class GildedRose {
             ItemType itemType = ItemType.getByItemName(item.name);
             itemTypeUpdateStrategyMap.get(itemType).update(item);
         }
+    }
+
+    private void updateQualityForConjured(Item item) {
+        decrementQualityByGivenValWithMinLimit(item, 2);
+        decrementSellInByOne(item);
     }
 
     private void updateQualityForNormalItem(Item item) {

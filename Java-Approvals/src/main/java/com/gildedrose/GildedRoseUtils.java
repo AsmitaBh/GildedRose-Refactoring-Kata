@@ -3,13 +3,14 @@ package com.gildedrose;
 class GildedRoseUtils {
 
     public static final int MAX_QUALITY_LIMIT = 50;
+    public static final int MIN_QUALITY_LIMIT = 0;
 
     private GildedRoseUtils() {
         throw new IllegalStateException("Utility class");
     }
 
     static boolean isQualityAboveMinLimit(Item item) {
-        return item.quality > 0;
+        return item.quality > MIN_QUALITY_LIMIT;
     }
 
     static void dropQualityToZero(Item item) {
@@ -47,6 +48,9 @@ class GildedRoseUtils {
 
     static void decrementQualityByOne(Item item) {
         item.quality = item.quality - 1;
+    }
+    static void decrementQualityByGivenValWithMinLimit(Item item, int decrementBy) {
+        item.quality = Math.max(item.quality - decrementBy, MIN_QUALITY_LIMIT);
     }
 
     static boolean isQualityUnderMaxLimit(Item item) {
