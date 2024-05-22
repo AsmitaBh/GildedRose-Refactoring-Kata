@@ -19,10 +19,9 @@ class GildedRose {
                     decrementQualityByOne(item);
                 }
                 decrementSellInByOne(item);
-                if (hasSellByDatePassed(item)) {
-                    if (isQualityAboveMinLimit(item)) {
+                if (hasSellByDatePassed(item) && isQualityAboveMinLimit(item)) {
                         decrementQualityByOne(item);
-                    }
+
                 }
             }
         }
