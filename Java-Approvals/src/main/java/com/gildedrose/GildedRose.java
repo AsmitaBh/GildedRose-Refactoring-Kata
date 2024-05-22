@@ -11,6 +11,8 @@ class GildedRose {
         for (Item item : items) {
             if (isAgedBrie(item)) {
                 updateQualityForAgedBrie(item);
+            } else if(isSulfuras(item)) {
+
             } else {
                 if (!isBackstagePass(item)) {
                     if (isQualityAboveMinLimit(item) && !isSulfuras(item)) {
