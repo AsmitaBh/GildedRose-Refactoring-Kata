@@ -11,9 +11,8 @@ class GildedRose {
         for (Item item : items) {
             if (!isAgedBrie(item)
                 && !isBackstagePass(item)) {
-                if (item.quality > 0 && !isSulfuras(item)) {
+                if (isQualityAboveMinLimit(item) && !isSulfuras(item)) {
                     decrementQualityByOne(item);
-
                 }
             } else {
                 if (isQualityUnderMaxLimit(item)) {
@@ -38,7 +37,7 @@ class GildedRose {
             if (hasSellByDatePassed(item)) {
                 if (!isAgedBrie(item)) {
                     if (!isBackstagePass(item)) {
-                        if (item.quality > 0 && !isSulfuras(item)) {
+                        if (isQualityAboveMinLimit(item) && !isSulfuras(item)) {
                             decrementQualityByOne(item);
                         }
                     } else {
@@ -51,6 +50,10 @@ class GildedRose {
                 }
             }
         }
+    }
+
+    private static boolean isQualityAboveMinLimit(Item item) {
+        return item.quality > 0;
     }
 
     private static void dropQualityToZero(Item item) {
