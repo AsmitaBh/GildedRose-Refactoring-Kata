@@ -20,11 +20,11 @@ class GildedRose {
                     incrementQualityByOne(item);
 
                     if (isBackstagePass(item)) {
-                        if (item.sellIn < 11 && isQualityUnderMaxLimit(item)) {
+                        if (isSellInTenDaysOrLess(item) && isQualityUnderMaxLimit(item)) {
                             incrementQualityByOne(item);
                         }
 
-                        if (item.sellIn < 6 && isQualityUnderMaxLimit(item)) {
+                        if (isSellInFiveDaysOrLess(item) && isQualityUnderMaxLimit(item)) {
                             incrementQualityByOne(item);
                         }
                     }
@@ -35,7 +35,7 @@ class GildedRose {
                 item.sellIn = item.sellIn - 1;
             }
 
-            if (item.sellIn < 0) {
+            if (hasSellByDatePassed(item)) {
                 if (!isAgedBrie(item)) {
                     if (!isBackstagePass(item)) {
                         if (item.quality > 0 && !isSulfuras(item)) {
@@ -51,6 +51,18 @@ class GildedRose {
                 }
             }
         }
+    }
+
+    private static boolean hasSellByDatePassed(Item item) {
+        return item.sellIn < 0;
+    }
+
+    private static boolean isSellInFiveDaysOrLess(Item item) {
+        return item.sellIn < 6;
+    }
+
+    private static boolean isSellInTenDaysOrLess(Item item) {
+        return item.sellIn < 11;
     }
 
     private static boolean isSulfuras(Item item) {
