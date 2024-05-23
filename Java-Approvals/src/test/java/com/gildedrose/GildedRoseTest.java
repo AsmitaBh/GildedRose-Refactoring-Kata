@@ -1,6 +1,8 @@
 package com.gildedrose;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -89,31 +91,17 @@ class GildedRoseTest {
         assertEquals(21, item.quality);
     }
 
-    @Test
-    void testBackstagePass_whenSellInIsTenOrLess_qualityIncreasesByTwoEachDay() {
+    @ParameterizedTest(name = "testBackstagePass_{0}")
+    @CsvSource({"whenSellInIsTenOrLess_qualityIncreasesByTwoEachDay,10,9,32",
+        "whenSellInIsFiveOrLess_qualityIncreasesByThreeEachDay,15,4,43",
+        "qualityNeverMoreThanFifty,18,1,50"})
+    void testBackstagePass_multipleScenarios(String testName, int updateQualityForDays, int expectedSellIn,
+                                             int expectedQuality) {
         Item item = getBackstagePassItem();
         gildedRose = new GildedRose(new Item[]{item});
-        updateQualityForMultipleDays(10);
-        assertEquals(9, item.sellIn);
-        assertEquals(32, item.quality);
-    }
-
-    @Test
-    void testBackstagePass_whenSellInIsFiveOrLess_qualityIncreasesByThreeEachDay() {
-        Item item = getBackstagePassItem();
-        gildedRose = new GildedRose(new Item[]{item});
-        updateQualityForMultipleDays(15);
-        assertEquals(4, item.sellIn);
-        assertEquals(43, item.quality);
-    }
-
-    @Test
-    void testBackstagePass_qualityNeverMoreThanFifty() {
-        Item item = getBackstagePassItem();
-        gildedRose = new GildedRose(new Item[]{item});
-        updateQualityForMultipleDays(18);
-        assertEquals(1, item.sellIn);
-        assertEquals(50, item.quality);
+        updateQualityForMultipleDays(updateQualityForDays);
+        assertEquals(expectedSellIn, item.sellIn);
+        assertEquals(expectedQuality, item.quality);
     }
 
     @Test
@@ -145,6 +133,7 @@ class GildedRoseTest {
         assertEquals(-2, item.sellIn);
         assertEquals(2, item.quality);
     }
+
     @Test
     void testConjured_qualityNeverLessThanZero() {
         Item item = getConjuredItem();
